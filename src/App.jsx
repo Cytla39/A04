@@ -10,22 +10,21 @@ function App() {
 
   const [listaPokemones, setListaPokemones] = useState([]);
 
+  const pokemonSeleccionado = JSON.parse(localStorage.getItem("pokemonSeleccionado"));
+
   const [detallePokemonSeleccionado, setPokemonSeleccionado] = useState(() => {
-    const detalle = localStorage.getItem('pokemonSeleccionadoDetalle');
-    return detalle !== null ? detalle : '';
+    return pokemonSeleccionado !== null ? pokemonSeleccionado.detalle : '';
   });
 
   const [imgUrl, setImgUrl] = useState(()=> {
 
-    const imgUrl = localStorage.getItem('imgPokemonSeleccionado');
-    return imgUrl !== null ? imgUrl : '';
+    return pokemonSeleccionado !== null ? pokemonSeleccionado.imagen : '';
 
   });
 
   const [nombre, setNombre] = useState(() => {
 
-    const nombre = localStorage.getItem('pokemonSeleccionadoNombre');
-    return nombre !== null ? nombre : '';
+    return pokemonSeleccionado !== null ? pokemonSeleccionado.nombre : '';
     
   });
 
@@ -55,9 +54,17 @@ function App() {
     setImgUrl(imgUrl);
     setNombre(nombre);
 
-    localStorage.setItem('pokemonSeleccionadoNombre', nombre);
-    localStorage.setItem('imgPokemonSeleccionado', imgUrl);
-    localStorage.setItem('pokemonSeleccionadoDetalle', data.effect_entries[0].effect);
+    const pokemonSeleccionado = {
+      nombre: nombre,
+      imagen: imgUrl,
+      detalle: data.effect_entries[0].effect
+    };
+
+    localStorage.setItem("pokemonSeleccionado", JSON.stringify(pokemonSeleccionado))
+
+    // localStorage.setItem('pokemonSeleccionadoNombre', nombre);
+    // localStorage.setItem('imgPokemonSeleccionado', imgUrl);
+    // localStorage.setItem('pokemonSeleccionadoDetalle', data.effect_entries[0].effect);
   }
 
 
